@@ -20,8 +20,13 @@ module.exports.hello = async (event) => {
 };
 
 module.exports.returnzipfile = (event, context, callback) => {
-  let file = fs.readFile(sampleZipPath, "binary", (err, data)=>{
+  //GOAL 1. solved. The encoded need to use is ASCII
+  fs.readFile(sampleZipPath, "ascii", (err, data)=>{
     if(err) callback(err, null);
+
+    console.log("data string size: "+data.length);
+    console.log("data TextEncoded size: "+(new TextEncoder().encode(data)).length);
+    
     let response =  {
       statusCode: 200,
       headers:{
@@ -31,6 +36,16 @@ module.exports.returnzipfile = (event, context, callback) => {
     };
     callback(null, response);
   });
+
+  // let bufData = fs.readFileSync(sampleZipPath);
+  // let response = {
+  //   statusCode: 200,
+  //   headers: {
+  //     "Content-Type": "application/zip"
+  //   },
+  //   body: bufData.toString("ascii");
+  // };
+  // callback(null, response);
 };
 
 module.exports.nodejsjavafn = (event, context, callback) => {
