@@ -11,7 +11,10 @@
 #
 # Happy Coding!
 
-service: sample-poc-1
+service: sample-aws-poc-1
+
+
+
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
