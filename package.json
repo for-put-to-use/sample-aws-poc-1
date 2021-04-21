@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sai prakash",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "serverless-offline": "^6.9.0"
+  }
 }
