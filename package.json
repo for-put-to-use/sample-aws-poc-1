@@ -1,5 +1,5 @@
 {
-  "name": "sample-poc-1",
+  "name": "sample-aws-poc-1",
   "version": "1.0.0",
   "description": "POC",
   "main": "handler.js",
