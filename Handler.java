@@ -1,8 +1,8 @@
 package handler;
 
 import java.util.Map;
-import java.lang.List;
-import java.lang.ArrayList;
+import java.util.List;
+import java.util.ArrayList;
 import java.lang.*;
 
 
@@ -19,7 +19,7 @@ public class Handler implements RequestHandler<Map<String, Object>, String>{
     String response = new String("200 OK");
     System.out.println("Inside Java Handler");
 
-    String cmd = "notepad.exe";
+    String cmd = "java -jar openapi-generator-cli-5.1.0.jar generate -i ./swagger.json -g java -o ./client";
 
     List<String> list = new ArrayList<String>();
     list.add(cmd);
@@ -27,19 +27,8 @@ public class Handler implements RequestHandler<Map<String, Object>, String>{
     // create the process
     ProcessBuilder build = new ProcessBuilder(list);
 
-    build.command();
+    System.out.println("output: "+build.command());
 
     return response;
   }
 }
-
-// public class Handler implements RequestHandler<S3Event, String>{
-//   @Override
-//   public String handleRequest(S3Event input, Context context)
-//   {
-//     String response = new String("200 OK");
-//     System.out.println("Inside Java Handler");
-//     System.out.println("input: "+S3Event);
-//     return response;
-//   }
-// }

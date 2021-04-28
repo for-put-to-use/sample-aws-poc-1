@@ -68,7 +68,7 @@ functions:
   handleRequest:
     handler: handler.Handler::handleRequest
     package:
-      artifact: ./Handler.jar
+      artifact: ./Handler.zip
     runtime: java8
     events:
       - http:
