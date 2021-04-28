@@ -9,6 +9,9 @@
   "author": "sai prakash",
   "license": "ISC",
   "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.2.6",
+    "java-invoke-local": "0.0.6",
+    "serverless": "^2.37.1",
     "serverless-offline": "^6.9.0"
   }
 }

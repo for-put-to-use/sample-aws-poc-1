@@ -1,11 +1,12 @@
 'use strict';
 
 const fs = require("fs");
-const { exec } = require("child_process");
+const { exec, execSync } = require("child_process");
 
 const sampleZipPath = "./../sampleFiles/samplezip.zip";
 
 module.exports.hello = async (event) => {
+  console.log("hello executing ...");
   return {
     statusCode: 200,
     body: JSON.stringify(
@@ -20,8 +21,10 @@ module.exports.hello = async (event) => {
 };
 
 module.exports.returnzipfile = (event, context, callback) => {
+  let encodings = ["ascii", "binary" ]
+  console.log("path: "+sampleZipPath)
   //GOAL 1. solved. The encoded need to use is ASCII
-  fs.readFile(sampleZipPath, "ascii", (err, data)=>{
+  fs.readFile(sampleZipPath, encodings[0], (err, data)=>{
     if(err) callback(err, null);
 
     console.log("data string size: "+data.length);
@@ -50,20 +53,69 @@ module.exports.returnzipfile = (event, context, callback) => {
 
 module.exports.nodejsjavafn = (event, context, callback) => {
   //This need to be tested in deployed state on AWS Lambda
+  console.log("about to run java cmd");
+  console.log(">>START");
+  // let ret = execSync("npx java-invoke-local --server");
+  // let ret2 = execSync("java -version");
+  // console.log(ret2);
+  // console.log("->"+ret);
+  console.log("<<END");
+  
+  let child1 = exec("java -version",(error, stdout, stderr)=>{
+    let response = {};
+    if(stdout){
+      console.log("stdout:--");
+      console.log(stdout);
+      response = {
+        statusCode: 200,
+        body: stdout.toString()
+      };
+    }
+    else
+      console.log("stdout is null");
 
-  exec("java -version",(error, stdout, stderr)=>{
+    if(stderr){
+      console.log("stderr:--");
+      console.log(stderr);
+      response = {
+        statusCode: 200,
+        body: stderr.toString()
+      };
+    }
+    else
+      console.log("stderr is null");
+
+    // console.log(execSync("java -version"));
+
     if(error) callback(error, null);
 
-    let response = {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          message: 'Node and Java both Runtimes available!',
-        }
-      ),
-    };
     callback(null, response)
   })
 
+
+};
+
+module.exports.openapigeneratortest = (event, context, callback) => {
+  console.log("openapigeneratortest executing ...");
+  let cmd = "npx @openapitools/openapi-generator-cli list";
+
+  
+
+
+  try{
+    let ret = execSync(cmd);
+    let response =  {
+      statusCode: 200,
+      body: ret.toString()
+    };
+    callback(null, response);
+  }
+  catch(error){
+    let response =  {
+      statusCode: 500,
+      body: error.toString()
+    };
+    callback(error, null);
+  }
 
 };
